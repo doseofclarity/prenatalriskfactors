@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MCN: Risk Factors & Diagnostic Tests During Pregnancy – Adele Pillitteri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .transition-all { transition: all 0.3s ease; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #1d4ed8; border-radius: 8px; }
+        .recall-mode .reveal-text {
+            background-color: #cbd5e1;
+            color: transparent;
+            border-radius: 0.375rem;
+            padding: 0 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            box-shadow: inset 0 0 0 1px #94a3b8;
+        }
+        .recall-mode .reveal-text:hover,
+        .recall-mode .reveal-text.revealed {
+            background-color: #fde047;
+            color: #1e293b;
+            box-shadow: none;
+        }
+        .content-section { animation: fade 0.3s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .locked-section { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        .quiz-feedback-correct { background-color: #dcfce7; border-left: 4px solid #22c55e; }
+        .quiz-feedback-wrong { background-color: #fee2e2; border-left: 4px solid #ef4444; }
+        .nav-btn.active { background-color: #dbeafe; color: #1e3a8a; border-right: 4px solid #2563eb; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { dx: { light: '#dbeafe', DEFAULT: '#2563eb', dark: '#1e3a8a' } } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 h-screen flex flex-col md:flex-row font-sans text-slate-800 overflow-hidden">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden bg-dx-dark text-white p-4 flex justify-between items-center shadow-md z-30 shrink-0">
+        <button onclick="toggleMobileMenu()" class="text-white focus:outline-none z-40"><i class="fa-solid fa-bars text-2xl"></i></button>
+        <h1 class="font-bold text-lg absolute left-1/2 transform -translate-x-1/2 pointer-events-none"><i class="fa-solid fa-flask mr-2"></i> Prenatal Risk & Tests</h1>
+        <div class="w-8"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="hidden md:flex flex-col w-full md:w-80 bg-white shadow-2xl h-full absolute md:relative z-30 transition-all duration-300 shrink-0 border-r border-slate-200 overflow-y-auto">
+        <div class="p-6 bg-gradient-to-br from-dx-dark to-dx text-white hidden md:block shrink-0">
+            <h1 class="font-black text-2xl tracking-wide"><i class="fa-solid fa-flask text-dx-light mr-2"></i> Prenatal Risk & Diagnostics</h1>
+            <p class="text-sm text-slate-300 mt-1">Adele Pillitteri · CHN White Book</p>
+        </div>
+        <div class="flex-1 py-4">
+            <ul class="space-y-1 text-sm font-medium">
+                <li><button onclick="showSection('home')" id="btn-home" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors"><i class="fa-solid fa-house w-6 nav-icon"></i><i class="fa-solid fa-lock w-6 hidden text-slate-400"></i> Home / Start</button></li>
+                <li><button onclick="showSection('risk_maternal')" id="btn-risk_maternal" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-female w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 1. Maternal Risk Factors</button></li>
+                <li><button onclick="showSection('risk_fetal')" id="btn-risk_fetal" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-baby w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 2. Fetal & Obstetric Risk Factors</button></li>
+                <li><button onclick="showSection('first_trimester')" id="btn-first_trimester" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-calendar-week w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 3. First Trimester Tests</button></li>
+                <li><button onclick="showSection('second_trimester')" id="btn-second_trimester" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-calendar-week w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 4. Second Trimester Tests</button></li>
+                <li><button onclick="showSection('third_trimester')" id="btn-third_trimester" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-calendar-week w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 5. Third Trimester Tests</button></li>
+                <li><button onclick="showSection('mnemonics')" id="btn-mnemonics" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors locked-section"><i class="fa-solid fa-brain w-6 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> 6. Mnemonic Appendix</button></li>
+                <li><button onclick="showSection('final_quiz_sec')" id="btn-final_quiz_sec" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-50 transition-colors border-t border-slate-200 mt-2 locked-section"><i class="fa-solid fa-graduation-cap w-6 text-amber-500 nav-icon hidden"></i><i class="fa-solid fa-lock w-6 text-slate-400"></i> Final 50‑Item Exam</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 h-full overflow-y-auto bg-slate-100 relative w-full">
+        <div class="fixed top-16 md:top-4 right-4 md:right-8 z-40 flex items-center bg-white/90 backdrop-blur px-4 py-3 rounded-full shadow-lg border border-slate-200 cursor-pointer hover:bg-slate-50" onclick="toggleRecallMode()">
+            <span class="mr-3 text-sm font-bold text-slate-700 hidden md:inline"><i class="fa-solid fa-brain text-dx mr-1"></i> Active Recall</span>
+            <span class="mr-3 text-sm font-bold text-slate-700 md:hidden"><i class="fa-solid fa-brain text-dx"></i></span>
+            <button id="recall-toggle" class="w-12 h-6 bg-slate-300 rounded-full relative transition-colors duration-300 focus:outline-none shadow-inner pointer-events-none">
+                <div id="recall-knob" class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-300 shadow"></div>
+            </button>
+        </div>
+
+        <div class="p-4 md:p-8 max-w-6xl mx-auto pb-32">
+            <!-- HOME -->
+            <section id="home" class="content-section flex flex-col items-center justify-center min-h-[80vh] text-center block">
+                <div class="bg-gradient-to-br from-slate-800 to-dx-dark text-white rounded-3xl shadow-2xl p-10 md:p-16 w-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-10 -mr-10 text-white opacity-5"><i class="fa-solid fa-microscope text-[20rem]"></i></div>
+                    <div class="relative z-10">
+                        <div class="bg-white/10 backdrop-blur-sm inline-block p-4 rounded-full text-dx-light mb-6"><i class="fa-solid fa-shield-heart text-5xl"></i></div>
+                        <h3 class="text-xl font-bold text-slate-300 mb-2 uppercase">Maternal‑Child Nursing · Adele Pillitteri</h3>
+                        <h1 class="text-4xl md:text-6xl font-black leading-tight drop-shadow-md">Risk Factors & Diagnostic Tests<br>During Pregnancy</h1>
+                        <p class="text-lg max-w-2xl mx-auto mt-6 text-slate-200">Identify maternal, fetal, and obstetric risk factors. Master first, second, and third trimester screening and diagnostic tests — from ultrasound to amniocentesis, NST to BPP.</p>
+                        <button onclick="unlockFirstSection()" class="mt-10 bg-slate-600 hover:bg-slate-500 text-white font-black py-4 px-12 rounded-full shadow-xl transition-transform hover:scale-105 text-lg flex items-center mx-auto">Begin Module <i class="fa-solid fa-arrow-right ml-3"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1: Maternal Risk Factors -->
+            <section id="risk_maternal" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-female text-dx mr-4"></i> Maternal Risk Factors</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">👩 Age extremes</strong><br>• <35 years: risk of chromosomal abnormalities, pregnancy-induced hypertension, gestational diabetes, preterm birth<br>• <18 years: increased risk of preeclampsia, preterm birth, low birth weight<br>• Women over 40 have higher risk of stillbirth and cesarean</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">📋 Medical conditions</strong><br>• Chronic hypertension → preeclampsia, IUGR, abruption<br>• Diabetes (pre-gestational) → congenital anomalies, macrosomia<br>• Thyroid disorders, heart disease, renal disease, autoimmune disorders, thrombophilia</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🍷 Lifestyle & social</strong><br>• Smoking → IUGR, preterm birth, placental abruption<br>• Alcohol → fetal alcohol spectrum disorders<br>• Illicit drugs (cocaine, opioids) → abruption, withdrawal, growth restriction<br>• Poor nutrition, low socioeconomic status, limited prenatal care</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🩺 Obstetric history</strong><br>• Prior preterm birth, stillbirth, neonatal death<br>• Prior cesarean (risk of uterine rupture, placenta accreta)<br>• Grand multiparity (≥5) → increased hemorrhage, malpresentation<br>• History of preeclampsia, gestational diabetes, or macrosomia</div>
+                    </div>
+                    <button onclick="openQuiz('risk_maternal')" class="mt-8 w-full bg-dx text-white font-black py-4 rounded-xl shadow-md hover:bg-dx-dark transition-colors text-lg"><i class="fa-solid fa-list-check mr-3"></i> Take 10-Item Quiz (Unlocks next section)</button>
+                </div>
+            </section>
+
+            <!-- Section 2: Fetal & Obstetric Risk Factors -->
+            <section id="risk_fetal" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-baby text-dx mr-4"></i> Fetal & Obstetric Risk Factors</h2>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li><strong>Multiple gestation:</strong> Increased risk of preterm labor, preeclampsia, IUGR, malpresentation, postpartum hemorrhage.</li>
+                        <li><strong>Polyhydramnios / Oligohydramnios:</strong> Associated with fetal anomalies, placental insufficiency, cord prolapse.</li>
+                        <li><strong>Placental abnormalities:</strong> Placenta previa (painless bleeding), placental abruption (painful bleeding, abruption), vasa previa.</li>
+                        <li><strong>Fetal growth abnormalities:</strong> Intrauterine growth restriction (IUGR) or macrosomia (>4000–4500g).</li>
+                        <li><strong>Fetal anomalies:</strong> Structural or chromosomal (detected by ultrasound or genetic testing).</li>
+                        <li><strong>Rh incompatibility:</strong> Rh-negative mother with Rh-positive fetus → isoimmunization, hemolytic disease of the newborn.</li>
+                        <li><strong>Infections (TORCH):</strong> Toxoplasmosis, rubella, CMV, herpes, others (syphilis, parvovirus B19, Zika).</li>
+                    </ul>
+                    <div class="bg-amber-50 p-3 rounded-lg mt-3"><strong>⚠️ High‑risk pregnancy requires specialized care (maternal‑fetal medicine referral).</strong> Serial growth ultrasounds, NST/BPP, and timely delivery planning.</div>
+                    <button onclick="openQuiz('risk_fetal')" class="mt-8 w-full bg-dx text-white font-black py-4 rounded-xl shadow-md hover:bg-dx-dark transition-colors text-lg"><i class="fa-solid fa-list-check mr-3"></i> Take 10-Item Quiz (Unlocks next section)</button>
+                </div>
+            </section>
+
+            <!-- Section 3: First Trimester Tests -->
+            <section id="first_trimester" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-calendar-week text-dx mr-4"></i> First Trimester Tests (0–13 weeks)</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">✅ Urine/Serum Pregnancy Test</strong><br>Detects hCG. Urine qualitative (home), serum quantitative (β‑hCG) confirms pregnancy and monitors viability.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🩸 Complete Blood Count (CBC)</strong><br>Detects anemia, platelet disorders, infection. Baseline for hemoglobin, hematocrit, WBC.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🩸 Blood Type & Rh, Antibody Screen</strong><br>Identifies Rh‑negative mothers → need Rh immune globulin. Antibody screen detects preexisting isoimmunization.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🧬 Rubella, Hepatitis B, Syphilis, HIV</strong><br>Mandatory screening. Rubella non‑immune → vaccinate postpartum. Treat STIs to prevent vertical transmission.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🔬 Urinalysis & Culture</strong><br>Detects asymptomatic bacteriuria (increased pyelonephritis risk), proteinuria (pre‐eclampsia), glucosuria (gestational diabetes clue).</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🔬 Pap Smear & STI Screening</strong><br>If due; gonorrhea/chlamydia screening recommended for high‑risk women.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🖥️ Transvaginal/Transabdominal Ultrasound</strong><br>Dating (crown‑rump length), confirm viability, detect multiple gestation. Nuchal translucency (NT) at 11–13⁺⁶ weeks – part of first trimester screening.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🧬 Chorionic Villus Sampling (CVS)</strong><br>10–13 weeks. Diagnostic test for chromosomal abnormalities (e.g., Down syndrome). Small risk of miscarriage (0.5–1%).</div>
+                    </div>
+                    <div class="bg-blue-50 p-2 rounded-lg mt-2 text-sm">📌 <strong>First trimester combined screening</strong> (NT ultrasound + PAPP‑A, free β‑hCG) detects ~85% of Down syndrome cases.</div>
+                    <button onclick="openQuiz('first_trimester')" class="mt-8 w-full bg-dx text-white font-black py-4 rounded-xl shadow-md hover:bg-dx-dark transition-colors text-lg"><i class="fa-solid fa-list-check mr-3"></i> Take 10-Item Quiz (Unlocks next section)</button>
+                </div>
+            </section>
+
+            <!-- Section 4: Second Trimester Tests -->
+            <section id="second_trimester" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-calendar-week text-dx mr-4"></i> Second Trimester Tests (14–27 weeks)</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🧪 Maternal Serum AFP (MSAFP)</strong><br>15–20 weeks. Elevated → neural tube defects (spina bifida, anencephaly). Low → risk of Down syndrome and trisomy 18.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🔬 Quadruple Screen (Quad screen)</strong><br>MSAFP + hCG + uE3 + inhibin A. Detects Down syndrome (75–80%), trisomy 18, neural tube defects.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🖥️ Fetal Anatomy Ultrasound (Level II)</strong><br>18–22 weeks. Evaluates fetal structures (head, spine, heart, abdomen, extremities, placenta, amniotic fluid). Detects major anomalies.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🧬 Amniocentesis</strong><br>15–20 weeks. Diagnostic for chromosomal disorders, neural tube defects (AFP in amniotic fluid). Miscarriage risk 0.1–0.3%.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🍬 Glucose Challenge Test (GCT) – 50g</strong><br>24–28 weeks (or earlier if risk factors). 1‑hour plasma glucose ≥130–140 mg/dL → proceed to OGTT.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🍩 Oral Glucose Tolerance Test (OGTT) – 100g, 3‑hr</strong><br>Diagnostic for gestational diabetes. Fasting, 1h, 2h, 3h levels. Two or more elevated values → GDM.</div>
+                    </div>
+                    <div class="bg-green-50 p-2 rounded-lg mt-2 text-sm">✅ If MSAFP is elevated, order detailed ultrasound to rule out neural tube defects. Persistent elevation with no fetal anomaly suggests other causes (multiple gestation, incorrect dates).</div>
+                    <button onclick="openQuiz('second_trimester')" class="mt-8 w-full bg-dx text-white font-black py-4 rounded-xl shadow-md hover:bg-dx-dark transition-colors text-lg"><i class="fa-solid fa-list-check mr-3"></i> Take 10-Item Quiz (Unlocks next section)</button>
+                </div>
+            </section>
+
+            <!-- Section 5: Third Trimester Tests (28–40 weeks) -->
+            <section id="third_trimester" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-calendar-week text-dx mr-4"></i> Third Trimester Tests (28–40 weeks)</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">💊 50g Glucose Challenge (if not done in 2nd trimester)</strong><br>Or repeat GDM screening in high‑risk women.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🦠 Group B Streptococcus (GBS) Screening</strong><br>35–37 weeks. Rectovaginal culture. Positive → intrapartum penicillin prophylaxis to prevent neonatal sepsis.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🩸 Repeat CBC, Rh antibody titer</strong><br>Check for anemia; Rh‑negative mother receives Rh immune globulin (RhoGAM) at 28 weeks and within 72h postpartum if infant Rh+.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🖥️ Biophysical Profile (BPP)</strong><br>Ultrasound + NST. Five components: fetal breathing, movement, tone, amniotic fluid volume, NST (reactive). Score 8/10 or 10/10 is reassuring.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">❤️ Non‑Stress Test (NST)</strong><br>Monitors fetal heart rate reactivity. Reactive: ≥2 accelerations in 20 minutes. Non‑reactive → further evaluation (BPP or contraction stress test).</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">📈 Contraction Stress Test (CST)</strong><br>Assesses fetal response to uterine contractions. Negative (no late decelerations) is reassuring. Positive (late decelerations) indicates uteroplacental insufficiency.</div>
+                        <div class="bg-slate-50 p-4 rounded-xl"><strong class="text-dx">🩸 Doppler Velocimetry</strong><br>Assesses umbilical artery blood flow. Abnormal (absent or reversed end‑diastolic flow) suggests placental insufficiency, often in IUGR or preeclampsia.</div>
+                    </div>
+                    <button onclick="openQuiz('third_trimester')" class="mt-8 w-full bg-dx text-white font-black py-4 rounded-xl shadow-md hover:bg-dx-dark transition-colors text-lg"><i class="fa-solid fa-list-check mr-3"></i> Take 10-Item Quiz (Unlocks next section)</button>
+                </div>
+            </section>
+
+            <!-- Section 6: Mnemonics -->
+            <section id="mnemonics" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h2 class="text-3xl font-black text-slate-800 mb-6 border-b-2 border-dx pb-3"><i class="fa-solid fa-brain text-dx mr-4"></i> Mnemonic Appendix</h2>
+                    <div class="overflow-x-auto rounded-xl border">
+                        <table class="w-full text-left text-sm md:text-base"><thead class="bg-dx-dark text-white"><tr><th class="p-3">Topic</th><th class="p-3">Mnemonic</th><th class="p-3">Meaning</th></tr></thead>
+                        <tbody><tr><td class="p-3 font-semibold">Maternal risk factors</span></td><td class="font-black">A M O L H</span></td><td class="reveal-text">Age, Medical conditions, Obstetric history, Lifestyle, Health (chronic illness)</span></tr>
+                        <tr class="bg-slate-50"><td class="p-3 font-semibold">First trimester labs</span></td><td class="font-black">C B R R U</span></td><td class="reveal-text">CBC, Blood type/Rh, Rubella, STI/HIV, Urinalysis</span></td>
+                        <tr><td class="p-3 font-semibold">Second trimester markers (quad screen)</span></td><td class="font-black">A H E I</span></td><td class="reveal-text">AFP, hCG, uE3, Inhibin A</span></td>
+                        <tr class="bg-slate-50"><td class="p-3 font-semibold">Third trimester tests</span><td><td class="font-black">G B B N</span></td><td class="reveal-text">GBS, Biophysical profile, Non‑stress test, Contraction stress test</span></td>
+                        <tr><td class="p-3 font-semibold">Biophysical profile components</span></td><td class="font-black">M B A F N</span></td><td class="reveal-text">Movement, Breathing, Amniotic fluid, Tone, NST (reactive)</span></td>
+                        </tbody>
+                    </table>
+                    <button onclick="openQuiz('final_quiz')" class="mt-8 w-full bg-amber-500 text-slate-900 font-black py-4 rounded-xl shadow-md hover:bg-amber-400 text-lg"><i class="fa-solid fa-graduation-cap mr-3"></i> Take Final 50‑Item Exam</button>
+                </div>
+            </section>
+
+            <!-- Final Quiz Section -->
+            <section id="final_quiz_sec" class="content-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-8 text-center min-h-[60vh] flex flex-col justify-center items-center">
+                    <i class="fa-solid fa-graduation-cap text-8xl text-amber-400 mb-6"></i>
+                    <h2 class="text-4xl font-black text-slate-800 mb-4">Final 50‑Item Exam</h2>
+                    <p class="text-lg text-slate-600 mb-8">Covers all 5 sections. 75% required to pass.</p>
+                    <button onclick="openQuiz('final_quiz')" class="w-full max-w-md bg-dx-dark text-white font-black py-4 rounded-xl shadow-md hover:bg-dx text-xl">Start Final Exam</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeQuiz()" class="absolute top-4 right-4 text-slate-400 hover:text-red-500"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <h2 id="quiz-title" class="text-3xl font-black text-slate-800 mb-2"></h2>
+            <p class="text-slate-600 mb-6 font-medium border-b pb-4">Score ≥75% to unlock next section.</p>
+            <div id="quiz-questions-container" class="space-y-4"></div>
+            <button id="quiz-submit-btn" onclick="submitQuiz()" class="mt-8 w-full bg-dx text-white font-bold py-4 rounded-xl shadow-lg text-lg">Submit Answers</button>
+            <div id="quiz-result-container" class="hidden mt-6 p-4 rounded-xl bg-slate-100 border"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            let unlockedSections = ['home'];
+            // Quiz data – 10 questions each for 5 sections (risk_maternal, risk_fetal, first, second, third)
+            const quizzes = {
+                risk_maternal: {
+                    title: "Quiz 1: Maternal Risk Factors (10 items)",
+                    next: "risk_fetal",
+                    questions: [
+                        { q: "Advanced maternal age is defined as:", options: [">30 years", ">35 years", ">40 years", ">45 years"], ans: 1 },
+                        { q: "Women under 18 years are at increased risk for:", options: ["Post‑term pregnancy", "Preeclampsia and preterm birth", "Down syndrome", "Placenta previa"], ans: 1 },
+                        { q: "Which maternal condition increases the risk of congenital anomalies?", options: ["Chronic hypertension", "Gestational diabetes", "Pregestational diabetes (poorly controlled)", "Asthma"], ans: 2 },
+                        { q: "Smoking during pregnancy is associated with:", options: ["Macrosomia", "Intrauterine growth restriction (IUGR)", "Post‑term pregnancy", "Polyhydramnios"], ans: 1 },
+                        { q: "Grand multiparity (≥5 births) increases risk of:", options: ["Fetal macrosomia", "Postpartum hemorrhage and malpresentation", "Preeclampsia only", "Gestational diabetes"], ans: 1 },
+                        { q: "Which of the following is an obstetric risk factor?", options: ["Prior preterm birth", "Family history of diabetes", "Maternal age 30", "Nulliparity"], ans: 0 },
+                        { q: "Alcohol consumption during pregnancy can cause:", options: ["Neural tube defects", "Fetal alcohol spectrum disorders", "Clubfoot", "Hydrops fetalis"], ans: 1 },
+                        { q: "A mother with chronic hypertension is at higher risk for:", options: ["Preeclampsia, abruption, and IUGR", "Placenta previa", "Polyhydramnios", "Post‑term pregnancy"], ans: 0 },
+                        { q: "Which lifestyle factor is most strongly linked to placental abruption?", options: ["Poor nutrition", "Cocaine use", "Caffeine intake", "Lack of exercise"], ans: 1 },
+                        { q: "Prior cesarean section increases risk of:", options: ["Uterine rupture and placenta accreta in subsequent pregnancies", "Preterm labor", "Gestational diabetes", "Postpartum depression"], ans: 0 }
+                    ]
+                },
+                risk_fetal: {
+                    title: "Quiz 2: Fetal & Obstetric Risk Factors (10 items)",
+                    next: "first_trimester",
+                    questions: [
+                        { q: "Multiple gestation increases the risk of:", options: ["Post‑term pregnancy", "Preterm labor and preeclampsia", "IUGR only", "Macrosomia"], ans: 1 },
+                        { q: "Painless vaginal bleeding in the third trimester suggests:", options: ["Placental abruption", "Placenta previa", "Vasa previa", "Uterine rupture"], ans: 1 },
+                        { q: "Oligohydramnios is associated with:", options: ["Fetal renal agenesis and placental insufficiency", "Diabetes mellitus", "Multiple gestation", "Post‑term pregnancy only"], ans: 0 },
+                        { q: "Rh incompatibility occurs when:", options: ["Mother Rh+, fetus Rh-", "Mother Rh-, fetus Rh+", "Both Rh+", "Both Rh-"], ans: 1 },
+                        { q: "TORCH infections are concerning because they:", options: ["Cause maternal illness only", "Can cause congenital anomalies and fetal harm", "Are easily treated with antibiotics", "Only affect preterm infants"], ans: 1 },
+                        { q: "Macrosomia (birth weight >4000g) is often associated with:", options: ["Maternal diabetes", "Placental insufficiency", "Smoking", "IUGR"], ans: 0 },
+                        { q: "Vasa previa is dangerous because:", options: ["Maternal hemorrhage is massive", "Fetal vessels can rupture during membrane rupture, causing fetal exsanguination", "It causes preterm labor", "It leads to IUGR"], ans: 1 },
+                        { q: "A history of prior stillbirth is a risk factor for:", options: ["Recurrent stillbirth and placental insufficiency", "Gestational diabetes", "Preterm labor only", "Multifetal pregnancy"], ans: 0 },
+                        { q: "Which fetal condition is associated with polyhydramnios?", options: ["Renal agenesis", "Esophageal atresia (inability to swallow)", "IUGR", "Placental abruption"], ans: 1 },
+                        { q: "Cytomegalovirus (CMV) infection during pregnancy can cause:", options: ["Maternal rash only", "Fetal hearing loss and microcephaly", "No fetal effects", "Macrosomia"], ans: 1 }
+                    ]
+                },
+                first_trimester: {
+                    title: "Quiz 3: First Trimester Tests (10 items)",
+                    next: "second_trimester",
+                    questions: [
+                        { q: "The most sensitive way to detect pregnancy early is:", options: ["Urine hCG", "Serum quantitative β‑hCG", "Ultrasound", "Basal body temperature"], ans: 1 },
+                        { q: "Rubella antibody testing is done to:", options: ["Diagnose active infection", "Determine immunity; non‑immune women vaccinate postpartum", "Detect fetal anomalies", "Screen for STI"], ans: 1 },
+                        { q: "Chorionic villus sampling (CVS) is performed at:", options: ["8–10 weeks", "10–13 weeks", "15–20 weeks", "24–28 weeks"], ans: 1 },
+                        { q: "What does nuchal translucency (NT) measurement assess?", options: ["Fetal lung maturity", "Risk of Down syndrome and other trisomies", "Placental location", "Amniotic fluid volume"], ans: 1 },
+                        { q: "First trimester combined screening includes:", options: ["NT ultrasound + PAPP‑A + free β‑hCG", "Quad screen", "Glucose challenge", "GBS culture"], ans: 0 },
+                        { q: "Which test is diagnostic for chromosomal abnormalities in first trimester?", options: ["Quad screen", "CVS", "MSAFP", "NST"], ans: 1 },
+                        { q: "A woman with blood type O negative is at risk for:", options: ["Hemolytic disease of newborn", "ABO incompatibility", "Rh sensitization if fetus is Rh+", "Iron deficiency"], ans: 2 },
+                        { q: "Asymptomatic bacteriuria in pregnancy is important to treat because it can lead to:", options: ["Preterm labor and pyelonephritis", "IUGR", "Macrosomia", "Placenta previa"], ans: 0 },
+                        { q: "Transvaginal ultrasound in first trimester is used to:", options: ["Confirm viability, dating, number of fetuses", "Assess fetal anatomy", "Measure AFI", "BPP"], ans: 0 },
+                        { q: "Maternal serum PAPP‑A is part of:", options: ["First trimester Down syndrome screening", "Second trimester quad screen", "Glucose tolerance test", "GBS culture"], ans: 0 }
+                    ]
+                },
+                second_trimester: {
+                    title: "Quiz 4: Second Trimester Tests (10 items)",
+                    next: "third_trimester",
+                    questions: [
+                        { q: "Elevated maternal serum AFP (MSAFP) may indicate:", options: ["Down syndrome", "Open neural tube defect (spina bifida)", "Gestational diabetes", "Rh incompatibility"], ans: 1 },
+                        { q: "The quad screen includes AFP, hCG, uE3, and:", options: ["PAPP‑A", "Inhibin A", "Progesterone", "Estradiol"], ans: 1 },
+                        { q: "Amniocentesis is typically performed at:", options: ["10–12 weeks", "15–20 weeks", "24–28 weeks", "34–36 weeks"], ans: 1 },
+                        { q: "The fetal anatomy scan (level II ultrasound) is done at:", options: ["12–14 weeks", "18–22 weeks", "28–32 weeks", "36–38 weeks"], ans: 1 },
+                        { q: "Glucose challenge test (50g) is performed at:", options: ["8–12 weeks", "16–20 weeks", "24–28 weeks", "32–36 weeks"], ans: 2 },
+                        { q: "A 1‑hour glucose value of 150 mg/dL after 50g load requires:", options: ["Diagnosis of GDM", "3‑hour 100g OGTT", "Immediate insulin", "Repeat 1‑hour test"], ans: 1 },
+                        { q: "Two or more elevated values on the 3‑hour OGTT indicate:", options: ["Normal glucose tolerance", "Gestational diabetes", "Pregestational diabetes", "Impaired fasting glucose"], ans: 1 },
+                        { q: "Low MSAFP is associated with:", options: ["Neural tube defect", "Down syndrome", "Placental abruption", "Preterm birth"], ans: 1 },
+                        { q: "Which of the following is a diagnostic test (not a screening test)?", options: ["MSAFP", "Quad screen", "Amniocentesis with karyotype", "Glucose challenge"], ans: 2 },
+                        { q: "Amniocentesis can also measure:", options: ["Amniotic fluid AFP for neural tube defects", "Fetal lung maturity (L/S ratio)", "Both A and B", "None"], ans: 2 }
+                    ]
+                },
+                third_trimester: {
+                    title: "Quiz 5: Third Trimester Tests (10 items)",
+                    next: "mnemonics",
+                    questions: [
+                        { q: "Group B Streptococcus (GBS) screening is performed at:", options: ["24–28 weeks", "35–37 weeks", "32–34 weeks", "First visit"], ans: 1 },
+                        { q: "A positive GBS culture requires intrapartum:", options: ["Penicillin or ampicillin", "Ceftriaxone", "Vancomycin", "No treatment"], ans: 0 },
+                        { q: "A reactive non‑stress test (NST) is defined as:", options: ["≥2 accelerations of 15 bpm for 15 seconds in 20 minutes", "No accelerations", "Late decelerations", "Bradycardia"], ans: 0 },
+                        { q: "Biophysical profile (BPP) includes all EXCEPT:", options: ["Fetal breathing", "Fetal tone", "Contraction stress test", "Amniotic fluid volume"], ans: 2 },
+                        { q: "A BPP score of 8/10 is considered:", options: ["Abnormal", "Equivocal", "Reassuring (normal)", "Critical"], ans: 2 },
+                        { q: "Positive contraction stress test (CST) means:", options: ["Normal", "Late decelerations with ≥50% of contractions – uteroplacental insufficiency", "Early decelerations", "Variable decelerations"], ans: 1 },
+                        { q: "Rh immune globulin (RhoGAM) is given at 28 weeks and postpartum if:", options: ["Mother Rh+, baby Rh+", "Mother Rh-, baby Rh+", "Mother Rh-, baby Rh-", "Both Rh+"], ans: 1 },
+                        { q: "Doppler velocimetry of umbilical artery is used to assess:", options: ["Fetal growth only", "Placental blood flow resistance; absent/reverse end‑diastolic flow suggests insufficiency", "Amniotic fluid", "Fetal heart rate"], ans: 1 },
+                        { q: "A non‑reactive NST prompts:", options: ["Immediate delivery", "Biophysical profile or contraction stress test", "Repeat NST in 1 week", "No action"], ans: 1 },
+                        { q: "The purpose of third trimester ultrasound is to:", options: ["Assess fetal growth, amniotic fluid, placenta, and presentation", "Diagnose neural tube defects", "Perform CVS", "Screen for gestational diabetes"], ans: 0 }
+                    ]
+                }
+            };
+            
+            // Build final 50‑item exam (10 from each of 5 sections)
+            let finalQuestions = [];
+            for(let sec of ['risk_maternal','risk_fetal','first_trimester','second_trimester','third_trimester']) {
+                finalQuestions = finalQuestions.concat(quizzes[sec].questions.slice(0,10));
+            }
+            while(finalQuestions.length < 50) finalQuestions.push({ q: "What is the recommended gestational age for GBS screening?", options: ["24–28 weeks", "35–37 weeks", "28–32 weeks", "First trimester"], ans: 1 });
+            quizzes['final_quiz'] = { title: "Final 50‑Item Exam: Risk Factors & Diagnostic Tests", next: null, questions: finalQuestions.slice(0,50) };
+            
+            // Global functions
+            window.unlockedSections = unlockedSections;
+            window.quizzes = quizzes;
+            
+            window.unlockFirstSection = function() {
+                if(!unlockedSections.includes('risk_maternal')) {
+                    unlockedSections.push('risk_maternal');
+                    updateSidebarUI();
+                }
+                showSection('risk_maternal');
+            };
+            
+            window.showSection = function(id) {
+                if(!unlockedSections.includes(id) && id !== 'home') {
+                    alert("Complete the previous section quiz (≥75%) to unlock this content.");
+                    return;
+                }
+                document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+                const target = document.getElementById(id);
+                if(target) target.classList.remove('hidden');
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.getElementById('btn-'+id);
+                if(activeBtn) activeBtn.classList.add('active');
+                if(window.innerWidth < 768) document.getElementById('sidebar')?.classList.add('hidden');
+                document.querySelector('main').scrollTop = 0;
+            };
+            
+            function updateSidebarUI() {
+                const all = ['home','risk_maternal','risk_fetal','first_trimester','second_trimester','third_trimester','mnemonics','final_quiz_sec'];
+                all.forEach(sec => {
+                    const btn = document.getElementById('btn-'+sec);
+                    if(!btn) return;
+                    const lockIcon = btn.querySelector('.fa-lock'), mainIcon = btn.querySelector('.nav-icon');
+                    if(unlockedSections.includes(sec) || sec === 'home') {
+                        btn.classList.remove('locked-section');
+                        if(lockIcon) lockIcon.classList.add('hidden');
+                        if(mainIcon) mainIcon.classList.remove('hidden');
+                    } else {
+                        btn.classList.add('locked-section');
+                        if(lockIcon) lockIcon.classList.remove('hidden');
+                        if(mainIcon) mainIcon.classList.add('hidden');
+                    }
+                });
+            }
+            
+            let currentQuiz = null;
+            window.openQuiz = function(sectionId) {
+                currentQuiz = sectionId;
+                const qd = quizzes[sectionId];
+                if(!qd) return;
+                document.getElementById('quiz-title').innerText = qd.title;
+                const container = document.getElementById('quiz-questions-container');
+                container.innerHTML = '';
+                qd.questions.forEach((q, idx) => {
+                    let html = `<div class="bg-slate-50 p-4 rounded-xl border mb-4"><p class="font-bold mb-3">${idx+1}. ${q.q}</p><div class="space-y-2">`;
+                    q.options.forEach((opt, oi) => {
+                        html += `<label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="q${idx}" value="${oi}" class="form-radio text-dx"><span>${opt}</span></label>`;
+                    });
+                    html += `</div><div class="feedback-${idx} text-sm mt-2 hidden"></div></div>`;
+                    container.innerHTML += html;
+                });
+                document.getElementById('quiz-submit-btn').classList.remove('hidden');
+                document.getElementById('quiz-result-container').classList.add('hidden');
+                document.getElementById('quiz-modal').classList.remove('hidden');
+            };
+            
+            window.closeQuiz = function() { document.getElementById('quiz-modal').classList.add('hidden'); };
+            
+            window.submitQuiz = function() {
+                const qd = quizzes[currentQuiz];
+                if(!qd) return;
+                let score = 0;
+                for(let i = 0; i < qd.questions.length; i++) {
+                    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                    const isCorrect = selected && parseInt(selected.value) === qd.questions[i].ans;
+                    if(isCorrect) score++;
+                    const fbDiv = document.querySelector(`.feedback-${i}`);
+                    if(fbDiv) {
+                        fbDiv.classList.remove('hidden');
+                        const correctAns = qd.questions[i].options[qd.questions[i].ans];
+                        if(isCorrect) {
+                            fbDiv.innerHTML = `<span class="text-green-700"><i class="fa-regular fa-circle-check"></i> Correct!</span>`;
+                            fbDiv.parentElement?.classList.add('quiz-feedback-correct');
+                            fbDiv.parentElement?.classList.remove('quiz-feedback-wrong');
+                        } else {
+                            const selectedText = selected ? qd.questions[i].options[parseInt(selected.value)] : "No answer";
+                            fbDiv.innerHTML = `<span class="text-red-700"><i class="fa-regular fa-circle-xmark"></i> Incorrect. Correct: ${correctAns}. Your answer: ${selectedText}</span>`;
+                            fbDiv.parentElement?.classList.add('quiz-feedback-wrong');
+                            fbDiv.parentElement?.classList.remove('quiz-feedback-correct');
+                        }
+                    }
+                }
+                const percent = (score / qd.questions.length) * 100;
+                const resultDiv = document.getElementById('quiz-result-container');
+                const btn = document.getElementById('quiz-submit-btn');
+                btn.classList.add('hidden');
+                resultDiv.classList.remove('hidden');
+                if(percent >= 75) {
+                    if(currentQuiz === 'final_quiz') {
+                        resultDiv.innerHTML = `<div class="text-amber-500 text-6xl text-center">🏆</div><h3 class="text-2xl font-black text-center">Mastery Achieved!</h3><p class="text-center">Score ${score}/${qd.questions.length} (${percent}%)</p><p class="text-center text-green-700">You have mastered risk factors and diagnostic tests during pregnancy.</p><button onclick="closeQuiz()" class="mt-4 w-full bg-dx text-white py-2 rounded-lg">Close</button>`;
+                        return;
+                    }
+                    if(qd.next && !unlockedSections.includes(qd.next)) {
+                        unlockedSections.push(qd.next);
+                        if(qd.next === 'mnemonics') unlockedSections.push('final_quiz_sec');
+                        updateSidebarUI();
+                    }
+                    resultDiv.innerHTML = `<div class="text-green-600 text-5xl text-center">✓</div><h3 class="text-2xl font-black text-center">Passed!</h3><p class="text-center">Score ${score}/${qd.questions.length} (${percent}%)</p><button onclick="closeQuiz(); showSection('${qd.next}')" class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg">Unlock Next Section</button>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="text-red-500 text-5xl text-center">✗</div><h3 class="text-2xl font-black text-center">Failed</h3><p class="text-center">Score ${score}/${qd.questions.length} (${percent}%). Need 75%.</p><button onclick="openQuiz('${currentQuiz}')" class="mt-4 w-full bg-slate-600 text-white py-2 rounded-lg">Try Again</button>`;
+                }
+            };
+            
+            window.toggleRecallMode = function() {
+                const active = !document.body.classList.contains('recall-mode');
+                const toggle = document.getElementById('recall-toggle'), knob = document.getElementById('recall-knob');
+                if(active) {
+                    document.body.classList.add('recall-mode');
+                    toggle.classList.add('bg-dx');
+                    knob.classList.add('translate-x-6');
+                } else {
+                    document.body.classList.remove('recall-mode');
+                    toggle.classList.remove('bg-dx');
+                    knob.classList.remove('translate-x-6');
+                }
+            };
+            
+            window.toggleMobileMenu = function() {
+                const s = document.getElementById('sidebar');
+                if(s.classList.contains('hidden')) s.classList.remove('hidden');
+                else s.classList.add('hidden');
+            };
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                updateSidebarUI();
+                document.querySelectorAll('.reveal-text').forEach(el => {
+                    el.addEventListener('click', function() {
+                        if(document.body.classList.contains('recall-mode')) this.classList.toggle('revealed');
+                    });
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
